@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
 
 from logistic.models import Product, Stock
@@ -25,6 +25,7 @@ class StockViewSet(ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
     # при необходимости добавьте параметры фильтрации
-    filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['id', "address", ]
-    search_fields = ['address', ]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['address', 'products', 'positions__price', 'id', ]
+    search_fields = ['address', 'products', ]
+    ordering_fields = ['products', 'positions__price', ]

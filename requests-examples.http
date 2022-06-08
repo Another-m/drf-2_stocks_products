@@ -87,3 +87,140 @@ Content-Type: application/json
 # поиск складов, где есть определенный продукт
 GET {{baseUrl}}/stocks/?products=2
 Content-Type: application/json
+
+###
+
+
+# Дополнительные запросы для тестирования
+
+# создание продукта
+POST {{baseUrl}}/products/
+Content-Type: application/json
+
+{
+  "title": "Огурец",
+  "description": "Лучшие огурцы в мире"
+}
+
+# создание продукта
+POST {{baseUrl}}/products/
+Content-Type: application/json
+
+{
+  "title": "Картофель",
+  "description": "Лучший картофан на рынке"
+}
+
+###
+
+# создание продукта
+POST {{baseUrl}}/products/
+Content-Type: application/json
+
+{
+  "title": "Пельмени",
+  "description": "Лучшие пельмени в холодильнике"
+}
+
+###
+
+# создание склада
+POST {{baseUrl}}/stocks/
+Content-Type: application/json
+
+{
+    "address": "Москва, Ленинский пр-т, 15",
+    "positions": [
+            {
+                "quantity": 16,
+                "price": "56000.00",
+                "product": 3
+            },
+            {
+                "quantity": 160,
+                "price": "5600.00",
+                "product": 1
+            },
+            {
+                "quantity": 80,
+                "price": "7000.00",
+                "product": 2
+            }
+]
+}
+
+###
+
+# обновляем записи на складе
+PUT {{baseUrl}}/stocks/38/
+Content-Type: application/json
+
+{
+    "id": 38,
+    "products": [
+        1,
+        2,
+        3
+    ],
+    "address": "Москва, Кутузовский пр-т, 15",
+    "positions": [
+        {
+            "quantity": 18,
+            "price": "5900.00",
+            "stock": 38,
+            "product": 3
+        },
+        {
+            "quantity": 150,
+            "price": "7800.00",
+            "stock": 38,
+            "product": 1
+        },
+        {
+            "quantity": 180,
+            "price": "6000.00",
+            "stock": 38,
+            "product": 2
+        }
+    ]
+}
+
+###
+
+# обновляем записи на складе
+PATCH {{baseUrl}}/stocks/38/
+Content-Type: application/json
+
+{
+    "positions": [
+        {
+            "price": "9000.00",
+            "product": 3
+        },
+        {
+            "quantity": 120,
+            "product": 1
+        },
+        {
+            "quantity": 120,
+            "price": "8000.00",
+            "product": 2
+        }
+    ]
+}
+
+###
+
+# обновляем записи на складе
+PATCH {{baseUrl}}/stocks/38/
+Content-Type: application/json
+
+{
+    "positions": [
+        {
+            "quantity": 1000,
+            "price": "3600.00",
+            "product": 2
+        }
+    ]
+}
