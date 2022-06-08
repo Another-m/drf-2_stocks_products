@@ -36,8 +36,6 @@ class StockSerializer(serializers.ModelSerializer):
         # в нашем случае: таблицу StockProduct
         # с помощью списка positions
 
-        print(stock)
-        print(Stock.objects.get(address=stock).id)
 
         for element in range(len(positions)):
             StockProduct.objects.create(stock=stock, **positions[element])
@@ -54,10 +52,19 @@ class StockSerializer(serializers.ModelSerializer):
         # в нашем случае: таблицу StockProduct
         # с помощью списка positions
 
-        for element in range(len(positions)):
-            stocks_positions = stock.positions.get(product=positions[element].get('product'))
-            stocks_positions.price = positions[element].get('price', stocks_positions.price)
-            stocks_positions.quantity = positions[element].get('quantity', stocks_positions.quantity)
-            stocks_positions.save()
+        # for element in range(len(positions)):
+            # stocks_positions = stock.positions.get(product=positions[element].get('product'))
+            # stocks_positions.price = positions[element].get('price', stocks_positions.price)
+            # stocks_positions.quantity = positions[element].get('quantity', stocks_positions.quantity)
+            # stocks_positions.save()
+        for value in positions:
+            StockProduct.objects.update_or_create(
+                stock=stock,
+                product=value.get('product'),
+                defaults={
+                    'quantity': value.get('quantity'),
+                    'price': value.get('price')
+                }
+            )
 
         return stock
